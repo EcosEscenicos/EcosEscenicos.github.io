@@ -4,7 +4,16 @@
     <meta charset="UTF-8">
     <title>Listado de Obras de Teatro</title>
     <style>
-        /* Estilos CSS */
+        /* Estilos CSS para la grilla */
+        .grilla {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+            gap: 10px; /* Espacio entre elementos */
+        }
+        .obra {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -12,27 +21,14 @@
 
     <!-- Formulario de búsqueda -->
     <form>
-        <label for="titulo">Título:</label>
-        <input type="text" id="titulo">
-        <label for="autor">Autor:</label>
-        <input type="text" id="autor">
-        <label for="personajes">Cantidad de Personajes:</label>
-        <input type="text" id="personajes">
-        <label for="tipo">Tipo de Obra:</label>
-        <input type="text" id="tipo">
-        <label for="duracion">Duración:</label>
-        <input type="text" id="duracion">
-        <label for="sinopsis">Sinopsis:</label>
-        <input type="text" id="sinopsis">
-        <label for="contacto">Contacto del Autor:</label>
-        <input type="text" id="contacto">
-        <button type="button" onclick="buscarObras()">Buscar</button>
+        <label for="busqueda">Buscar:</label>
+        <input type="text" id="busqueda">
     </form>
 
-    <!-- Lista de obras de teatro -->
-    <ul id="listaObras">
-        <!-- Aquí se mostrarán los resultados de la búsqueda -->
-    </ul>
+    <!-- Grilla para mostrar las obras -->
+    <div class="grilla" id="listaObras">
+        <!-- Los datos de las obras se cargarán aquí dinámicamente con JavaScript -->
+    </div>
 
     <script>
         // Datos de obras de teatro (simulados)
@@ -42,55 +38,40 @@
             // Agrega más obras aquí...
         ];
 
-        // Función para realizar la búsqueda
-        function buscarObras() {
-            const filtroTitulo = document.getElementById("titulo").value.toLowerCase();
-            const filtroAutor = document.getElementById("autor").value.toLowerCase();
-            const filtroPersonajes = document.getElementById("personajes").value.toLowerCase();
-            const filtroTipo = document.getElementById("tipo").value.toLowerCase();
-            const filtroDuracion = document.getElementById("duracion").value.toLowerCase();
-            const filtroSinopsis = document.getElementById("sinopsis").value.toLowerCase();
-            const filtroContacto = document.getElementById("contacto").value.toLowerCase();
+        // Función para mostrar las obras en la grilla
+        function mostrarObras(obras) {
+            const listaObras = document.getElementById("listaObras");
+            listaObras.innerHTML = ""; // Limpiar la grilla
 
-            const resultados = obras.filter(obra => 
-                obra.titulo.toLowerCase().includes(filtroTitulo) &&
-                obra.autor.toLowerCase().includes(filtroAutor) &&
-                obra.personajes.toString().toLowerCase().includes(filtroPersonajes) &&
-                obra.tipo.toLowerCase().includes(filtroTipo) &&
-                obra.duracion.toLowerCase().includes(filtroDuracion) &&
-                obra.sinopsis.toLowerCase().includes(filtroSinopsis) &&
-                obra.contacto.toLowerCase().includes(filtroContacto)
-            );
-
-            mostrarResultados(resultados);
+            obras.forEach(obra => {
+                const div = document.createElement("div");
+                div.classList.add("obra");
+                div.innerHTML = `
+                    <strong>Título:</strong> ${obra.titulo}<br>
+                    <strong>Autor:</strong> ${obra.autor}<br>
+                    <strong>Cantidad de Personajes:</strong> ${obra.personajes}<br>
+                    <strong>Tipo de Obra:</strong> ${obra.tipo}<br>
+                    <strong>Duración:</strong> ${obra.duracion}<br>
+                    <strong>Sinopsis:</strong> ${obra.sinopsis}<br>
+                    <strong>Contacto del Autor:</strong> <a href="mailto:${obra.contacto}">${obra.contacto}</a>
+                `;
+                listaObras.appendChild(div);
+            });
         }
 
-        // Función para mostrar los resultados de la búsqueda
-        function mostrarResultados(resultados) {
-            const listaObras = document.getElementById("listaObras");
-            listaObras.innerHTML = ""; // Limpiar lista
+        // Función para realizar la búsqueda
+        function buscarObras() {
+            const busqueda = document.getElementById("busqueda").value.toLowerCase();
+            const resultados = obras.filter(obra => {
+                // Realiza la búsqueda en todos los campos
+                return Object.values(obra).some(valor => valor.toLowerCase().includes(busqueda));
+            });
 
-            if (resultados.length === 0) {
-                listaObras.innerHTML = "<p>No se encontraron resultados.</p>";
-            } else {
-                resultados.forEach(obra => {
-                    const li = document.createElement("li");
-                    li.innerHTML = `
-                        <strong>Título:</strong> ${obra.titulo}<br>
-                        <strong>Autor:</strong> ${obra.autor}<br>
-                        <strong>Cantidad de Personajes:</strong> ${obra.personajes}<br>
-                        <strong>Tipo de Obra:</strong> ${obra.tipo}<br>
-                        <strong>Duración:</strong> ${obra.duracion}<br>
-                        <strong>Sinopsis:</strong> ${obra.sinopsis}<br>
-                        <strong>Contacto del Autor:</strong> <a href="mailto:${obra.contacto}">${obra.contacto}</a>
-                    `;
-                    listaObras.appendChild(li);
-                });
-            }
+            mostrarObras(resultados);
         }
 
         // Mostrar todas las obras al cargar la página
-        mostrarResultados(obras);
+        mostrarObras(obras);
     </script>
 </body>
 </html>
