@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de Obras de Teatro</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Listado de Obras de Teatro</h1>
@@ -25,18 +26,18 @@
     </form>
 
     <!-- Lista de obras de teatro -->
-    <table id="listaObras">
-        <tr class="header-row">
-            <th>Título</th>
-            <th>Autor</th>
-            <th>Cantidad de Personajes</th>
-            <th>Tipo de Obra</th>
-            <th>Duración</th>
-            <th>Sinopsis</th>
-            <th>Contacto del Autor</th>
-        </tr>
-        <!-- Los datos de las obras se cargarán aquí dinámicamente con Python -->
-    </table>
+    <div class="tabla">
+        <div class="fila header">
+            <div class="columna">Título</div>
+            <div class="columna">Autor</div>
+            <div class="columna">Cantidad de Personajes</div>
+            <div class="columna">Tipo de Obra</div>
+            <div class="columna">Duración</div>
+            <div class="columna">Sinopsis</div>
+            <div class="columna">Contacto del Autor</div>
+        </div>
+        <!-- Los datos de las  obras se cargarán aquí dinámicamente con JavaScript -->
+    </div>
 
     <script src="script.js"></script>
 </body>
