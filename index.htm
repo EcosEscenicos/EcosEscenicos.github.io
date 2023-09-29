@@ -1,37 +1,96 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Obras de Teatro</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Listado de Obras de Teatro</title>
+    <style>
+        /* Estilos CSS */
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Catálogo de Obras de Teatro</h1>
-    </header>
+    <h1>Listado de Obras de Teatro</h1>
 
-    <div class="teatro-list">
-        <?php include 'catalogo.php'; ?>
-    </div>
-
-    <form action="agregar.php" method="post">
-        <h2>Agregar Obra de Teatro</h2>
+    <!-- Formulario de búsqueda -->
+    <form>
         <label for="titulo">Título:</label>
-        <input type="text" id="titulo" name="titulo" required>
+        <input type="text" id="titulo">
         <label for="autor">Autor:</label>
-        <input type="text" id="autor" name="autor" required>
+        <input type="text" id="autor">
         <label for="personajes">Cantidad de Personajes:</label>
-        <input type="number" id="personajes" name="personajes" required>
+        <input type="text" id="personajes">
         <label for="tipo">Tipo de Obra:</label>
-        <input type="text" id="tipo" name="tipo" required>
+        <input type="text" id="tipo">
         <label for="duracion">Duración:</label>
-        <input type="text" id="duracion" name="duracion" required>
+        <input type="text" id="duracion">
         <label for="sinopsis">Sinopsis:</label>
-        <textarea id="sinopsis" name="sinopsis" required></textarea>
+        <input type="text" id="sinopsis">
         <label for="contacto">Contacto del Autor:</label>
-        <input type="email" id="contacto" name="contacto" required>
-        <button type="submit">Agregar</button>
+        <input type="text" id="contacto">
+        <button type="button" onclick="buscarObras()">Buscar</button>
     </form>
+
+    <!-- Lista de obras de teatro -->
+    <ul id="listaObras">
+        <!-- Aquí se mostrarán los resultados de la búsqueda -->
+    </ul>
+
+    <script>
+        // Datos de obras de teatro (simulados)
+        const obras = [
+            { titulo: "Obra 1", autor: "Autor 1", personajes: 5, tipo: "Drama", duracion: "2 horas", sinopsis: "Sinopsis 1", contacto: "autor1@example.com" },
+            { titulo: "Obra 2", autor: "Autor 2", personajes: 4, tipo: "Comedia", duracion: "1.5 horas", sinopsis: "Sinopsis 2", contacto: "autor2@example.com" },
+            // Agrega más obras aquí...
+        ];
+
+        // Función para realizar la búsqueda
+        function buscarObras() {
+            const filtroTitulo = document.getElementById("titulo").value.toLowerCase();
+            const filtroAutor = document.getElementById("autor").value.toLowerCase();
+            const filtroPersonajes = document.getElementById("personajes").value.toLowerCase();
+            const filtroTipo = document.getElementById("tipo").value.toLowerCase();
+            const filtroDuracion = document.getElementById("duracion").value.toLowerCase();
+            const filtroSinopsis = document.getElementById("sinopsis").value.toLowerCase();
+            const filtroContacto = document.getElementById("contacto").value.toLowerCase();
+
+            const resultados = obras.filter(obra => 
+                obra.titulo.toLowerCase().includes(filtroTitulo) &&
+                obra.autor.toLowerCase().includes(filtroAutor) &&
+                obra.personajes.toString().toLowerCase().includes(filtroPersonajes) &&
+                obra.tipo.toLowerCase().includes(filtroTipo) &&
+                obra.duracion.toLowerCase().includes(filtroDuracion) &&
+                obra.sinopsis.toLowerCase().includes(filtroSinopsis) &&
+                obra.contacto.toLowerCase().includes(filtroContacto)
+            );
+
+            mostrarResultados(resultados);
+        }
+
+        // Función para mostrar los resultados de la búsqueda
+        function mostrarResultados(resultados) {
+            const listaObras = document.getElementById("listaObras");
+            listaObras.innerHTML = ""; // Limpiar lista
+
+            if (resultados.length === 0) {
+                listaObras.innerHTML = "<p>No se encontraron resultados.</p>";
+            } else {
+                resultados.forEach(obra => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `
+                        <strong>Título:</strong> ${obra.titulo}<br>
+                        <strong>Autor:</strong> ${obra.autor}<br>
+                        <strong>Cantidad de Personajes:</strong> ${obra.personajes}<br>
+                        <strong>Tipo de Obra:</strong> ${obra.tipo}<br>
+                        <strong>Duración:</strong> ${obra.duracion}<br>
+                        <strong>Sinopsis:</strong> ${obra.sinopsis}<br>
+                        <strong>Contacto del Autor:</strong> <a href="mailto:${obra.contacto}">${obra.contacto}</a>
+                    `;
+                    listaObras.appendChild(li);
+                });
+            }
+        }
+
+        // Mostrar todas las obras al cargar la página
+        mostrarResultados(obras);
+    </script>
 </body>
 </html>
