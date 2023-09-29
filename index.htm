@@ -3,75 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Listado de Obras de Teatro</title>
-    <style>
-        /* Estilos CSS para la grilla */
-        .grilla {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 columnas */
-            gap: 10px; /* Espacio entre elementos */
-        }
-        .obra {
-            border: 1px solid #ccc;
-            padding: 10px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <h1>Listado de Obras de Teatro</h1>
 
     <!-- Formulario de búsqueda -->
-    <form>
-        <label for="busqueda">Buscar:</label>
+    <form id="search-form">
+        <label for="campo">Buscar por:</label>
+        <select id="campo">
+            <option value="titulo">Título</option>
+            <option value="autor">Autor</option>
+            <option value="personajes">Cantidad de Personajes</option>
+            <option value="genero">Género de Personajes</option>
+            <option value="tipo">Tipo de Obra</option>
+            <option value="duracion">Duración</option>
+            <option value="sinopsis">Sinopsis</option>
+            <option value="contacto">Contacto del Autor</option>
+        </select>
         <input type="text" id="busqueda">
+        <button type="button" onclick="buscarObras()">Buscar</button>
     </form>
 
-    <!-- Grilla para mostrar las obras -->
-    <div class="grilla" id="listaObras">
+    <!-- Lista de obras de teatro -->
+    <table id="listaObras">
+        <tr>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Cantidad de Personajes</th>
+            <th>Género de Personajes</th>
+            <th>Tipo de Obra</th>
+            <th>Duración</th>
+            <th>Sinopsis</th>
+            <th>Contacto del Autor</th>
+        </tr>
         <!-- Los datos de las obras se cargarán aquí dinámicamente con JavaScript -->
-    </div>
+    </table>
 
-    <script>
-        // Datos de obras de teatro (simulados)
-        const obras = [
-            { titulo: "Obra 1", autor: "Autor 1", personajes: 5, tipo: "Drama", duracion: "2 horas", sinopsis: "Sinopsis 1", contacto: "autor1@example.com" },
-            { titulo: "Obra 2", autor: "Autor 2", personajes: 4, tipo: "Comedia", duracion: "1.5 horas", sinopsis: "Sinopsis 2", contacto: "autor2@example.com" },
-            // Agrega más obras aquí...
-        ];
-
-        // Función para mostrar las obras en la grilla
-        function mostrarObras(obras) {
-            const listaObras = document.getElementById("listaObras");
-            listaObras.innerHTML = ""; // Limpiar la grilla
-
-            obras.forEach(obra => {
-                const div = document.createElement("div");
-                div.classList.add("obra");
-                div.innerHTML = `
-                    <strong>Título:</strong> ${obra.titulo}<br>
-                    <strong>Autor:</strong> ${obra.autor}<br>
-                    <strong>Cantidad de Personajes:</strong> ${obra.personajes}<br>
-                    <strong>Tipo de Obra:</strong> ${obra.tipo}<br>
-                    <strong>Duración:</strong> ${obra.duracion}<br>
-                    <strong>Sinopsis:</strong> ${obra.sinopsis}<br>
-                    <strong>Contacto del Autor:</strong> <a href="mailto:${obra.contacto}">${obra.contacto}</a>
-                `;
-                listaObras.appendChild(div);
-            });
-        }
-
-        // Función para realizar la búsqueda
-        function buscarObras() {
-            const busqueda = document.getElementById("busqueda").value.toLowerCase();
-            const resultados = obras.filter(obra => {
-                // Realiza la búsqueda en todos los campos
-                return Object.values(obra).some(valor => valor.toLowerCase().includes(busqueda));
-            });
-
-            mostrarObras(resultados);
-        }
-
-        // Mostrar todas las obras al cargar la página
-        mostrarObras(obras);
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
