@@ -1,9 +1,17 @@
-// Datos de obras de teatro (simulados)
-const obras = [
-    ["Obra 1", "Autor 1", "5", "Drama", "2 horas", "Sinopsis 1", "autor1@example.com"],
-    ["Obra 2", "Autor 2", "4", "Comedia", "1.5 horas", "Sinopsis 2", "autor2@example.com"],
-    // Agrega más obras aquí...
-];
+// Función para cargar las obras desde un archivo de texto en el servidor
+function cargarObrasDesdeArchivo() {
+    fetch('obras.txt') // Reemplaza 'obras.txt' con la URL del archivo en tu servidor
+        .then(response => response.text())
+        .then(data => {
+            // Divide el archivo de texto en líneas y luego en campos
+            const lineas = data.split('\n');
+            const obras = lineas.map(linea => linea.split('|'));
+            mostrarObras(obras);
+        })
+        .catch(error => {
+            console.error('Error al cargar el archivo de texto:', error);
+        });
+}
 
 // Función para mostrar las obras en la tabla
 function mostrarObras(obras) {
